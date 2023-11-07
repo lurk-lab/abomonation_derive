@@ -29,7 +29,7 @@ struct MethodData {
 )]
 pub fn derive(input: TokenStream) -> TokenStream {
     match derive_abomonation(input) {
-        Ok(result) => result.into(),
+        Ok(result) => result,
         Err(e) => e.to_compile_error().into(),
     }
 }
@@ -91,8 +91,8 @@ fn derive_abomonation(input: TokenStream) -> syn::Result<TokenStream> {
 
 fn derive_struct(this: &Ident, struct_data: &DataStruct) -> syn::Result<MethodData> {
     match &struct_data.fields {
-        syn::Fields::Named(named_fields) => derive_named_fields(this, &named_fields),
-        syn::Fields::Unnamed(unnamed_fields) => derive_unnamed_fields(&this, &unnamed_fields),
+        syn::Fields::Named(named_fields) => derive_named_fields(this, named_fields),
+        syn::Fields::Unnamed(unnamed_fields) => derive_unnamed_fields(this, unnamed_fields),
         syn::Fields::Unit => derive_unit_impl(),
     }
 }
@@ -109,9 +109,9 @@ fn derive_enum(_this: &Ident, enum_data: &DataEnum) -> syn::Result<MethodData> {
             extent,
         } = if !skip(&variant.attrs) {
             match &variant.fields {
-                syn::Fields::Named(named_fields) => derive_named_fields(ident, &named_fields),
+                syn::Fields::Named(named_fields) => derive_named_fields(ident, named_fields),
                 syn::Fields::Unnamed(unnamed_fields) => {
-                    derive_tuple_variant(ident, &unnamed_fields)
+                    derive_tuple_variant(ident, unnamed_fields)
                 }
                 syn::Fields::Unit => derive_unit_impl(),
             }?
@@ -307,7 +307,7 @@ fn derive_unit_impl() -> syn::Result<MethodData> {
 
 fn derive_entomb(
     this: proc_macro2::TokenStream,
-    attrs: &Vec<Attribute>,
+    attrs: &[Attribute],
 ) -> syn::Result<proc_macro2::TokenStream> {
     match with(attrs)? {
         Some(ty) => Ok(quote!(
@@ -327,7 +327,7 @@ fn derive_entomb(
 
 fn derive_exhume(
     this: proc_macro2::TokenStream,
-    attrs: &Vec<Attribute>,
+    attrs: &[Attribute],
 ) -> syn::Result<proc_macro2::TokenStream> {
     match with(attrs)? {
         Some(ty) => Ok(quote!(
@@ -346,7 +346,7 @@ fn derive_exhume(
 
 fn derive_extent(
     this: proc_macro2::TokenStream,
-    attrs: &Vec<Attribute>,
+    attrs: &[Attribute],
 ) -> syn::Result<proc_macro2::TokenStream> {
     match with(attrs)? {
         Some(ty) => Ok(quote!(
