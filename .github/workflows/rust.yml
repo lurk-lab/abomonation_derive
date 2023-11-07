@@ -56,7 +56,7 @@ jobs:
       - name: cargo test
         # TODO: --all-features
         run: |
-          cargo nextest run --release --profile ci
+          cargo nextest run --release
       - name: Doctests
         run: |
           cargo test --doc
@@ -80,11 +80,6 @@ jobs:
 
   msrv:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package:
-          - "bellpepper-core"
-          - "bellpepper"
     steps:
     - uses: actions/checkout@v4
     - name: Install rustup
@@ -92,9 +87,7 @@ jobs:
       with:
         toolchain: stable
         override: true
-    - uses: Swatinem/rust-cache@v2
     - name: Install cargo-msrv
       run: cargo install cargo-msrv
     - name: Check Rust MSRV
       run: cargo msrv verify
-      working-directory: crates/${{ matrix.package }}

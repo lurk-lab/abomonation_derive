@@ -17,11 +17,17 @@ mod tests {
     #[test]
     fn test_struct() {
         // create some test data out of abomonation-approved types
-        let record = Struct { a: "test".to_owned(), b: 0, c: vec![0, 1, 2] };
+        let record = Struct {
+            a: "test".to_owned(),
+            b: 0,
+            c: vec![0, 1, 2],
+        };
 
         // encode vector into a Vec<u8>
         let mut bytes = Vec::new();
-        unsafe { encode(&record, &mut bytes).unwrap(); }
+        unsafe {
+            encode(&record, &mut bytes).unwrap();
+        }
 
         assert_eq!(bytes.len(), measure(&record));
 
@@ -42,7 +48,9 @@ mod tests {
 
         // encode vector into a Vec<u8>
         let mut bytes = Vec::new();
-        unsafe { encode(&record, &mut bytes).unwrap(); }
+        unsafe {
+            encode(&record, &mut bytes).unwrap();
+        }
 
         assert_eq!(bytes.len(), measure(&record));
 
@@ -63,7 +71,9 @@ mod tests {
 
         // encode vector into a Vec<u8>
         let mut bytes = Vec::new();
-        unsafe { encode(&record, &mut bytes).unwrap(); }
+        unsafe {
+            encode(&record, &mut bytes).unwrap();
+        }
 
         assert_eq!(bytes.len(), measure(&record));
 
@@ -84,12 +94,16 @@ mod tests {
 
         // encode vector into a Vec<u8>
         let mut bytes = Vec::new();
-        unsafe { encode(&record, &mut bytes).unwrap(); }
+        unsafe {
+            encode(&record, &mut bytes).unwrap();
+        }
 
         assert_eq!(bytes.len(), measure(&record));
 
         // decode from binary data
-        if let Some((result, rest)) = unsafe { decode::<GenericStruct<String, Vec<u8>>>(&mut bytes) } {
+        if let Some((result, rest)) =
+            unsafe { decode::<GenericStruct<String, Vec<u8>>>(&mut bytes) }
+        {
             assert!(result == &record);
             assert!(rest.is_empty());
         }
@@ -100,7 +114,7 @@ mod tests {
     pub enum BasicEnum {
         Apples,
         Pears,
-        Chicken
+        Chicken,
     }
 
     #[test]
@@ -110,7 +124,9 @@ mod tests {
 
         // encode vector into a Vec<u8>
         let mut bytes = Vec::new();
-        unsafe { encode(&record, &mut bytes).unwrap(); }
+        unsafe {
+            encode(&record, &mut bytes).unwrap();
+        }
 
         assert_eq!(bytes.len(), measure(&record));
 
@@ -126,7 +142,7 @@ mod tests {
     pub enum DataEnum {
         A(String, u64, Vec<u8>),
         B,
-        C(String, String, String)
+        C(String, String, String),
     }
 
     #[test]
@@ -136,7 +152,9 @@ mod tests {
 
         // encode vector into a Vec<u8>
         let mut bytes = Vec::new();
-        unsafe { encode(&record, &mut bytes).unwrap(); }
+        unsafe {
+            encode(&record, &mut bytes).unwrap();
+        }
 
         assert_eq!(bytes.len(), measure(&record));
 
@@ -153,12 +171,11 @@ mod tests {
     #[derive(Abomonation)]
     pub enum GenericEnumWithBounds<T: SomeTrait> {
         A(T),
-        B
+        B,
     }
 
     #[test]
     fn test_ignore_attribute() {
-
         #[derive(Abomonation)]
         pub struct StructWithPhantomMarker<T> {
             data: usize,
@@ -167,7 +184,7 @@ mod tests {
         }
 
         #[derive(Abomonation)]
-        struct NonAbomonable { }
+        struct NonAbomonable {}
 
         // create some test data with a phantom non-abomonable type.
         let record = StructWithPhantomMarker {
@@ -177,7 +194,9 @@ mod tests {
 
         // encode vector into a Vec<u8>
         let mut bytes = Vec::new();
-        unsafe { encode(&record, &mut bytes).unwrap(); }
+        unsafe {
+            encode(&record, &mut bytes).unwrap();
+        }
 
         assert_eq!(bytes.len(), measure(&record));
     }
@@ -189,10 +208,14 @@ mod tests {
 
     #[test]
     fn test_path_beginning_with_crate() {
-        let record = StructUsingCratePath { header: EmptyStruct {} };
+        let record = StructUsingCratePath {
+            header: EmptyStruct {},
+        };
 
         let mut bytes = Vec::new();
-        unsafe { encode(&record, &mut bytes).unwrap(); }
+        unsafe {
+            encode(&record, &mut bytes).unwrap();
+        }
 
         assert_eq!(bytes.len(), measure(&record));
 
@@ -215,15 +238,19 @@ mod tests {
 
     #[test]
     fn test_omit_bounds() {
-        let record = OmitBounds::<F> { header: vec![F([0, 1, 2, 3]), F([1, 2, 3, 4]), F([100000, 9, 7, 1])] };
+        let record = OmitBounds::<F> {
+            header: vec![F([0, 1, 2, 3]), F([1, 2, 3, 4]), F([100000, 9, 7, 1])],
+        };
 
         let mut bytes = Vec::new();
-        unsafe { encode(&record, &mut bytes).unwrap(); }
+        unsafe {
+            encode(&record, &mut bytes).unwrap();
+        }
 
         assert_eq!(bytes.len(), measure(&record));
 
         // decode from binary data
-        if let Some((result, rest)) = unsafe { decode::<OmitBounds::<F>>(&mut bytes) } {
+        if let Some((result, rest)) = unsafe { decode::<OmitBounds<F>>(&mut bytes) } {
             assert!(result == &record);
             assert!(rest.is_empty());
         }

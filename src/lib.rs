@@ -110,9 +110,7 @@ fn derive_enum(_this: &Ident, enum_data: &DataEnum) -> syn::Result<MethodData> {
         } = if !skip(&variant.attrs) {
             match &variant.fields {
                 syn::Fields::Named(named_fields) => derive_named_fields(ident, named_fields),
-                syn::Fields::Unnamed(unnamed_fields) => {
-                    derive_tuple_variant(ident, unnamed_fields)
-                }
+                syn::Fields::Unnamed(unnamed_fields) => derive_tuple_variant(ident, unnamed_fields),
                 syn::Fields::Unit => derive_unit_impl(),
             }?
         } else {
@@ -312,7 +310,7 @@ fn derive_entomb(
     match with(attrs)? {
         Some(ty) => Ok(quote!(
             let __this = &#this as *const _ as *const #ty;
-            
+
             (*__this).entomb(bytes)?;
         )),
         None => {
@@ -366,7 +364,9 @@ fn derive_extent(
 fn add_trait_bounds(mut generics: Generics) -> Generics {
     for param in &mut generics.params {
         if let GenericParam::Type(ref mut type_param) = *param {
-            type_param.bounds.push(parse_quote!(abomonation::Abomonation));
+            type_param
+                .bounds
+                .push(parse_quote!(abomonation::Abomonation));
         }
     }
     generics
