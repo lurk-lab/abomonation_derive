@@ -28,7 +28,7 @@ mod tests {
         // decode from binary data
         if let Some((result, rest)) = unsafe { decode::<Struct>(&mut bytes) } {
             assert!(result == &record);
-            assert!(rest.len() == 0);
+            assert!(rest.is_empty());
         }
     }
 
@@ -49,7 +49,7 @@ mod tests {
         // decode from binary data
         if let Some((result, rest)) = unsafe { decode::<EmptyStruct>(&mut bytes) } {
             assert!(result == &record);
-            assert!(rest.len() == 0);
+            assert!(rest.is_empty());
         }
     }
 
@@ -70,7 +70,7 @@ mod tests {
         // decode from binary data
         if let Some((result, rest)) = unsafe { decode::<TupleStruct>(&mut bytes) } {
             assert!(result == &record);
-            assert!(rest.len() == 0);
+            assert!(rest.is_empty());
         }
     }
 
@@ -91,7 +91,7 @@ mod tests {
         // decode from binary data
         if let Some((result, rest)) = unsafe { decode::<GenericStruct<String, Vec<u8>>>(&mut bytes) } {
             assert!(result == &record);
-            assert!(rest.len() == 0);
+            assert!(rest.is_empty());
         }
     }
 
@@ -117,7 +117,7 @@ mod tests {
         // decode from binary data
         if let Some((result, rest)) = unsafe { decode::<BasicEnum>(&mut bytes) } {
             assert!(result == &record);
-            assert!(rest.len() == 0);
+            assert!(rest.is_empty());
         }
     }
 
@@ -143,7 +143,7 @@ mod tests {
         // decode from binary data
         if let Some((result, rest)) = unsafe { decode::<DataEnum>(&mut bytes) } {
             assert!(result == &record);
-            assert!(rest.len() == 0);
+            assert!(rest.is_empty());
         }
     }
 
@@ -167,7 +167,7 @@ mod tests {
         }
 
         #[derive(Abomonation)]
-        struct NonAbomonable { };
+        struct NonAbomonable { }
 
         // create some test data with a phantom non-abomonable type.
         let record = StructWithPhantomMarker {
@@ -199,7 +199,7 @@ mod tests {
         // decode from binary data
         if let Some((result, rest)) = unsafe { decode::<StructUsingCratePath>(&mut bytes) } {
             assert!(result == &record);
-            assert!(rest.len() == 0);
+            assert!(rest.is_empty());
         }
     }
 
@@ -225,7 +225,7 @@ mod tests {
         // decode from binary data
         if let Some((result, rest)) = unsafe { decode::<OmitBounds::<F>>(&mut bytes) } {
             assert!(result == &record);
-            assert!(rest.len() == 0);
+            assert!(rest.is_empty());
         }
     }
 }

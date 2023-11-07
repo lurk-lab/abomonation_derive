@@ -31,7 +31,7 @@ pub fn get_style(variant: &Variant) -> Style {
 }
 
 #[inline]
-pub fn with(attrs: &Vec<Attribute>) -> Result<Option<Type>, Error> {
+pub fn with(attrs: &[Attribute]) -> Result<Option<Type>, Error> {
     let fields = attrs
         .iter()
         .filter_map(|attr| {
@@ -47,7 +47,7 @@ pub fn with(attrs: &Vec<Attribute>) -> Result<Option<Type>, Error> {
             Span::call_site(),
             "only one with attribute is allowed",
         ))
-    } else if fields.len() == 0 {
+    } else if fields.is_empty() {
         Ok(None)
     } else {
         let field = fields[0].clone();
@@ -55,7 +55,7 @@ pub fn with(attrs: &Vec<Attribute>) -> Result<Option<Type>, Error> {
     }
 }
 
-pub fn bounds<'a>(attrs: &Vec<Attribute>) -> Result<Option<WhereClause>, Error> {
+pub fn bounds(attrs: &[Attribute]) -> Result<Option<WhereClause>, Error> {
     let fields = attrs
         .iter()
         .filter_map(|attr| {
@@ -71,7 +71,7 @@ pub fn bounds<'a>(attrs: &Vec<Attribute>) -> Result<Option<WhereClause>, Error> 
             Span::call_site(),
             "only one with trait bound is allowed",
         ))
-    } else if fields.len() == 0 {
+    } else if fields.is_empty() {
         Ok(None)
     } else {
         let where_clause = fields[0].clone();
@@ -79,7 +79,7 @@ pub fn bounds<'a>(attrs: &Vec<Attribute>) -> Result<Option<WhereClause>, Error> 
     }
 }
 
-pub fn omit_bounds(attrs: &Vec<Attribute>) -> bool {
+pub fn omit_bounds(attrs: &[Attribute]) -> bool {
     for attr in attrs.iter() {
         if attr.path().is_ident("abomonation_omit_bounds") {
             return true;
@@ -88,7 +88,7 @@ pub fn omit_bounds(attrs: &Vec<Attribute>) -> bool {
     false
 }
 
-pub fn skip(attrs: &Vec<Attribute>) -> bool {
+pub fn skip(attrs: &[Attribute]) -> bool {
     for attr in attrs.iter() {
         if attr.path().is_ident("abomonation_skip") {
             return true;
