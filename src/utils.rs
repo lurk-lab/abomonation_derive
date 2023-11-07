@@ -1,8 +1,5 @@
 use proc_macro2::Span;
-use syn::{
-    parse::Parse, Attribute, Error, Type,
-    Variant, WhereClause,
-};
+use syn::{parse::Parse, Attribute, Error, Type, Variant, WhereClause};
 
 #[derive(Copy, Clone)]
 pub enum Style {
@@ -25,7 +22,7 @@ pub fn get_style(variant: &Variant) -> Style {
             } else {
                 Style::Tuple
             }
-        },
+        }
         syn::Fields::Unit => Style::Unit,
     }
 }
