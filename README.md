@@ -1,4 +1,4 @@
-# abomonation_derive
+# abomonation_derive_ng
 
 Derive macro implementation for the Abomonation crate. Forked & improved from [the original `abomonation_derive` crate from @mystor](https://github.com/mystor/abomonation_derive).
 
@@ -10,7 +10,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-abomonation_derive = "0.1"
+abomonation_derive_ng = "0.1"
 abomonation = "0.5"
 ```
 
@@ -18,7 +18,7 @@ Then, derive `Abomonation` on your types:
 
 ```rust
 #[macro_use]
-extern crate abomonation_derive;
+extern crate abomonation_derive_ng;
 extern crate abomonation;
 use abomonation::Abomonation;
 
