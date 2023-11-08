@@ -1,6 +1,6 @@
 # abomonation_derive
 
-Derive macro implementation for the Abomonation crate.
+Derive macro implementation for the Abomonation crate. Forked & improved from [the original `abomonation_derive` crate from @mystor](https://github.com/mystor/abomonation_derive).
 
 This crate provides a custom derive macro `#[derive(Abomonation)]` for types that should be serializable with the [abomonation crate](https://github.com/frankmcsherry/abomonation).
 
@@ -50,5 +50,5 @@ For detailed information on the safety concerns and how to use this crate, consu
 
 ## License
 
-This project is licensed under the same terms as the `abomonation` crate.
+This project is licensed under the MIT License, same  as the original [`abomonation-derive`](https://github.com/mystor/abomonation_derive/blob/e0980ee7f4fb7c4ccadd85dfc770273a9068aef0/Cargo.toml#L6) crate.
 
