@@ -4,7 +4,7 @@
 mod tests {
 
     use abomonation::*;
-    use abomonation_derive::Abomonation;
+    use abomonation_derive_ng::Abomonation;
 
     #[derive(Eq, PartialEq, Abomonation)]
     pub struct Struct {
